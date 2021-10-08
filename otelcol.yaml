@@ -36,10 +36,10 @@ processors:
 
 service:
   pipelines:
-    traces:
-      receivers: [prometheus_simple]
-      processors: [memory_limiter, batch]
-      exporters: [googlecloud, logging]
+    # traces:
+    #   receivers: [prometheus_simple]
+    #   processors: [memory_limiter, batch]
+    #   exporters: [googlecloud, logging]
     metrics:
       receivers: [prometheus_simple]
       processors: [memory_limiter, batch]
