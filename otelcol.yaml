@@ -6,7 +6,7 @@ receivers:
   prometheus_simple:
     collection_interval: 1s
     #use_service_account: true
-    endpoint: "localhost:9090"
+    endpoint: "localhost:9999"
     # tls_enabled: true
     # tls_config:
     #   ca_file: "/path/to/ca"
