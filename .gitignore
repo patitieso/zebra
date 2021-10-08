@@ -13,3 +13,6 @@
 .cargo/
 # Nix configs
 shell.nix
+data/
+.DS_Store
+flamegraphs.*
