@@ -1,0 +1,43 @@
+receivers:
+  # otlp:
+  #   protocols:
+  #     grpc:
+  #     http:
+  prometheus_simple:
+    collection_interval: 1s
+    #use_service_account: true
+    endpoint: "localhost:9090"
+    # tls_enabled: true
+    # tls_config:
+    #   ca_file: "/path/to/ca"
+    #   cert_file: "/path/to/cert"
+    #   key_file: "/path/to/key"
+    #   insecure_skip_verify: true
+
+exporters:
+  googlecloud:
+    # Google Cloud Monitoring returns an error if any of the points are invalid, but still accepts the valid points.
+    # Retrying successfully sent points is guaranteed to fail because the points were already written.
+    # This results in a loop of unnecessary retries.  For now, disable retry_on_failure.
+    retry_on_failure:
+      enabled: false
+  logging:
+    loglevel: debug
+
+processors:
+  memory_limiter:
+  batch:
+    # Google Cloud Monitoring limits batches to 200 metric points.
+    send_batch_max_size: 200
+    send_batch_size: 200
+
+service:
+  pipelines:
+    traces:
+      receivers: [prometheus_simple]
+      processors: [memory_limiter, batch]
+      exporters: [googlecloud, logging]
+    metrics:
+      receivers: [prometheus_simple]
+      processors: [memory_limiter, batch]
+      exporters: [googlecloud, logging]
