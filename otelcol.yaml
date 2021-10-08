@@ -26,6 +26,7 @@ exporters:
 
 processors:
   memory_limiter:
+    check_interval: 5s
   batch:
     # Google Cloud Monitoring limits batches to 200 metric points.
     send_batch_max_size: 200
